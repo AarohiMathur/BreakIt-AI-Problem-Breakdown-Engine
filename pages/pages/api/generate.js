@@ -1,4 +1,5 @@
-import fetch from "node-fetch";
+// pages/api/generate.js
+// Uses the global fetch (available in Vercel/Node 18+). Do NOT include node-fetch.
 
 export default async function handler(req, res) {
   try {
@@ -8,6 +9,7 @@ export default async function handler(req, res) {
 
     const prompt = buildPrompt(problem, frameworks, tone, length);
 
+    // Call OpenAI Chat Completions via fetch using your OPENAI_API_KEY env var
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -31,10 +33,10 @@ export default async function handler(req, res) {
     const text = json.choices?.[0]?.message?.content || "";
 
     const outputs = parseToSections(text);
-    res.status(200).json({ outputs });
+    return res.status(200).json({ outputs });
   } catch (err) {
     console.error(err);
-    res.status(500).send(String(err));
+    return res.status(500).send(String(err));
   }
 }
 

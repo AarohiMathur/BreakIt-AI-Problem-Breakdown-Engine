@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensures full height for layout */
+html, body, #__next {
+  height: 100%;
+}
